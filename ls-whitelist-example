@@ -1,0 +1,20 @@
+access
+arch_prctl
+brk
+close
+connect
+exit_group
+fstat
+getdents
+getxattr
+ioctl: 2 == 21505
+ioctl: 2 == 21523
+lstat
+mmap
+mprotect
+munmap
+open
+read
+readlink
+socket
+write
