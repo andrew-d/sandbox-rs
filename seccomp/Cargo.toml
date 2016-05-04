@@ -1,0 +1,8 @@
+[package]
+name = "seccomp"
+version = "0.0.1"
+authors = ["Andrew Dunham <andrew@du.nham.ca>"]
+
+[dependencies]
+libc = "0.2"
+seccomp-sys = { version = "0.0.1", path = "../seccomp-sys" }
