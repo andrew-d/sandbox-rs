@@ -1,0 +1,10 @@
+[package]
+name = "sandbox"
+version = "0.0.1"
+authors = ["Andrew Dunham <andrew@du.nham.ca>"]
+
+[dependencies]
+clap = "2.4.0"
+libc = "0.2"
+nix = "0.5.0"
+seccomp = { version = "0.0.1", path = "../seccomp" }
