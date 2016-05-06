@@ -1,4 +1,5 @@
 extern crate clap;
+#[macro_use] extern crate lazy_static;
 extern crate libc;
 extern crate nix;
 extern crate seccomp;
@@ -16,6 +17,17 @@ use libc::{c_int, c_void};
 use nix::errno::errno;
 use nix::sys::{epoll, signal, wait};
 use seccomp::{Action, Compare, Filter, Op, get_syscall_number};
+
+
+lazy_static! {
+    static ref EXECVE_SYSCALL: i32 = {
+        get_syscall_number("execve").expect("could not get execve syscall")
+    };
+
+    static ref CLONE_SYSCALL: i32 = {
+        get_syscall_number("clone").expect("could not get clone syscall")
+    };
+}
 
 
 macro_rules! eprintln {
@@ -146,8 +158,7 @@ fn main() {
     }
 
     // Always permit the 'execve' syscall, since it's necessary for us to run the child process.
-    let execve_syscall = get_syscall_number("execve").expect("could not get execve syscall");
-    ftry!(filter.add_rule(Action::Allow, execve_syscall, &[]));
+    ftry!(filter.add_rule(Action::Allow, *EXECVE_SYSCALL, &[]));
 
     // TODO: parse syscalls from flag
 
@@ -184,8 +195,7 @@ fn main() {
     let flags = libc::SIGCHLD | libc::CLONE_NEWIPC | libc::CLONE_NEWNS |
         libc::CLONE_NEWPID | libc::CLONE_NEWUTS | libc::CLONE_NEWNET;
 
-    let clone_syscall = get_syscall_number("clone").expect("need clone syscall");
-    let pid = ptry!(unsafe { libc::syscall(clone_syscall as i64, flags, ptr::null::<*const c_void>()) }) as libc::pid_t;
+    let pid = ptry!(unsafe { libc::syscall(*CLONE_SYSCALL as i64, flags, ptr::null::<*const c_void>()) }) as libc::pid_t;
 
     if pid == 0 {
         unsafe {
