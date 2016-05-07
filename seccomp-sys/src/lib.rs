@@ -29,7 +29,7 @@ pub const SECCOMP_RET_DATA: u32 = 0x0000ffff;
 
 pub type scmp_filter_ctx = *mut c_void;
 
-#[derive(Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[repr(u32)]
 pub enum scmp_filter_attr {
     SCMP_FLTATR_ACT_DEFAULT = 1,
@@ -38,7 +38,7 @@ pub enum scmp_filter_attr {
     SCMP_FLTATR_CTL_TSYNC = 4,
 }
 
-#[derive(Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[repr(u32)]
 pub enum scmp_compare {
     SCMP_CMP_NE = 1,
@@ -53,7 +53,7 @@ pub enum scmp_compare {
 pub type scmp_datum_t = u64;
 
 #[repr(C)]
-#[derive(Copy)]
+#[derive(Debug, Copy, PartialEq, Eq, Hash)]
 pub struct scmp_arg_cmp {
     pub arg: c_uint,
     pub op: scmp_compare,

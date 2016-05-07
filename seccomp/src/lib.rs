@@ -10,6 +10,7 @@ use libc::close;
 
 
 /// A compare operation.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Op {
     /// Not equal
     OpNe,
@@ -46,6 +47,7 @@ impl Op {
 }
 
 /// Compare represents a single comparison operation.
+#[derive(Debug)]
 pub struct Compare(ffi::scmp_arg_cmp);
 
 impl Compare {
@@ -69,7 +71,7 @@ impl Compare {
 }
 
 /// An action to perform when a `seccomp` ruleset is violated.
-#[derive(Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Action {
     /// Kill the process.
     Kill,
@@ -109,6 +111,7 @@ impl Action {
 ///
 /// A filter context is intially empty.  Rules can be added to it, after which it can be loaded
 /// into the kernel.
+#[derive(Debug)]
 pub struct Filter {
     ctx: ffi::scmp_filter_ctx,
 }
