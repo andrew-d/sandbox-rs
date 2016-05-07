@@ -4,7 +4,6 @@ version = "0.0.1"
 authors = ["Andrew Dunham <andrew@du.nham.ca>"]
 
 [dependencies]
-clap = "2.4.0"
 lazy_static = "0.1"
 libc = "0.2"
 nix = "0.5.0"
