@@ -6,5 +6,5 @@ authors = ["Andrew Dunham <andrew@du.nham.ca>"]
 [dependencies]
 lazy_static = "0.1"
 libc = "0.2"
-nix = "0.5.0"
+nix = "0.20.2"
 seccomp = { version = "0.0.1", path = "../seccomp" }
